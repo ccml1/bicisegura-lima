@@ -1,12 +1,13 @@
-// HU04 mapa · HU05 reportar · HU06 validar · HU07 vencimiento y "ya no está"
+// HU04 mapa · HU05 reportar · HU06 validar · HU07 vencimiento y "ya no está" · HU08 límite de reportes
 const express = require('express');
 const db = require('../db');
+const config = require('../config');
 const { requireAuth } = require('../auth');
 const { requerido, enLista, numero, entero, ErrorValidacion } = require('../validar');
 const repo = require('../repositorio');
 const { limiteApi } = require('../limites');
 const {
-  TIPOS, estadoEvento, motivoNoPuedeVotar, dentroDeLima,
+  TIPOS, estadoEvento, motivoNoPuedeVotar, excedeLimiteReportes, dentroDeLima,
 } = require('../domain/eventos');
 
 const router = express.Router();
@@ -51,6 +52,14 @@ router.post('/eventos', requireAuth, async (req, res) => {
   const lat = numero(req.body.lat, 'lat');
   const lng = numero(req.body.lng, 'lng');
   if (!dentroDeLima(lat, lng)) throw new ErrorValidacion('La ubicación debe estar dentro de Lima Metropolitana');
+  const { rows: [{ total }] } = await db.query(
+    "SELECT count(*)::int AS total FROM eventos WHERE autor_id = $1 AND creado_en > now() - interval '1 hour'",
+    [req.usuario.id],
+  );
+  if (excedeLimiteReportes(total, config.maxReportesPorHora)) {
+    res.set('Retry-After', '3600');
+    return res.status(429).json({ error: `Alcanzaste el límite de ${config.maxReportesPorHora} reportes por hora. Intenta más tarde.` });
+  }
   const { rows } = await db.query(
     `INSERT INTO eventos (tipo, lat, lng, calle, distrito_id, descripcion, autor_id, ultima_confirmacion_en)
      VALUES ($1,$2,$3,$4,$5,$6,$7, now()) RETURNING id`,
