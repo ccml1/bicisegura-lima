@@ -1,0 +1,93 @@
+<!doctype html><html><head><meta charset="utf-8"><style>body{margin:0;background:#fff} text{font-family:Arial,Helvetica,sans-serif}</style></head><body>
+<svg xmlns="http://www.w3.org/2000/svg" width="1604" height="790" viewBox="0 0 1604 790">
+<defs><marker id="f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3a3a3c"/></marker>
+<marker id="v" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2e7d4f"/></marker></defs>
+<style>.l{stroke:#3a3a3c;stroke-width:2.5;fill:none;marker-end:url(#f)} .lv{stroke:#2e7d4f;stroke-width:2.5;fill:none;stroke-dasharray:7 5;marker-end:url(#v)}</style>
+<text x="40" y="44" style="font-size:24px;font-weight:700;fill:#1c1c1e">BiciSegura Lima · Ciclo de vida DevSecOps</text>
+<text x="40" y="70" style="font-size:14px;fill:#3a3a3c">Herramienta por fase y cómo se integra la seguridad en cada una (shift-left: los controles corren desde el código, antes de producción)</text>
+<rect x="40" y="96" width="1524" height="34" rx="8" fill="#eaf1f8"/><text x="56" y="118" style="font-size:14px;font-weight:700;fill:#1f4e79">INTEGRACIÓN CONTINUA (CI) · cada Pull Request hacia test o main</text>
+<rect x="40" y="150" width="360" height="222" rx="14" fill="#fff" stroke="#1f4e79" stroke-width="2.5"/>
+<rect x="40" y="150" width="360" height="40" rx="14" fill="#1f4e79"/><rect x="40" y="176" width="360" height="14" fill="#1f4e79"/>
+<text x="56" y="177" style="font-size:17px;font-weight:700;fill:#fff">1 · PLAN</text>
+<text x="56" y="216" style="font-size:15px;font-weight:700;fill:#1c1c1e">Jira Software (Scrum)</text>
+<text x="56" y="237" style="font-size:13px;fill:#3a3a3c">Épicas, HU, sprints, Kanban</text>
+<rect x="52" y="250" width="336" height="76" rx="8" fill="#fff4f2" stroke="#c0392b" stroke-width="1.2"/>
+<text x="62" y="267" style="font-size:11.5px;font-weight:700;fill:#a5281b">🔒 SEGURIDAD</text>
+<text x="62" y="285" style="font-size:12.5px;fill:#3a3a3c">Criterios de seguridad dentro de las HU: bcrypt</text>
+<text x="62" y="303" style="font-size:12.5px;fill:#3a3a3c">(HU03), anti-spam y fuerza bruta (HU08), no</text>
+<text x="62" y="321" style="font-size:12.5px;fill:#3a3a3c">guardar ubicación (HU15)</text>
+<text x="56" y="358" style="font-size:12px;fill:#6c6c70">Evidencia: Backlog y HU EXAMPFC</text><rect x="428" y="150" width="360" height="222" rx="14" fill="#fff" stroke="#1f4e79" stroke-width="2.5"/>
+<rect x="428" y="150" width="360" height="40" rx="14" fill="#1f4e79"/><rect x="428" y="176" width="360" height="14" fill="#1f4e79"/>
+<text x="444" y="177" style="font-size:17px;font-weight:700;fill:#fff">2 · CODE</text>
+<text x="444" y="216" style="font-size:15px;font-weight:700;fill:#1c1c1e">VS Code · Git · GitHub</text>
+<text x="444" y="237" style="font-size:13px;fill:#3a3a3c">Rama feature/EXAMPFC-n por HU</text>
+<rect x="440" y="250" width="336" height="76" rx="8" fill="#fff4f2" stroke="#c0392b" stroke-width="1.2"/>
+<text x="450" y="267" style="font-size:11.5px;font-weight:700;fill:#a5281b">🔒 SEGURIDAD</text>
+<text x="450" y="285" style="font-size:12.5px;fill:#3a3a3c">Secretos fuera del código (.gitignore), SQL</text>
+<text x="450" y="303" style="font-size:12.5px;fill:#3a3a3c">parametrizado, validación, Helmet; IA con</text>
+<text x="450" y="321" style="font-size:12.5px;fill:#3a3a3c">revisión humana</text>
+<text x="444" y="358" style="font-size:12px;fill:#6c6c70">Evidencia: Ramas y commits con clave</text><rect x="816" y="150" width="360" height="222" rx="14" fill="#fff" stroke="#1f4e79" stroke-width="2.5"/>
+<rect x="816" y="150" width="360" height="40" rx="14" fill="#1f4e79"/><rect x="816" y="176" width="360" height="14" fill="#1f4e79"/>
+<text x="832" y="177" style="font-size:17px;font-weight:700;fill:#fff">3 · BUILD</text>
+<text x="832" y="216" style="font-size:15px;font-weight:700;fill:#1c1c1e">GitHub Actions · npm ci</text>
+<text x="832" y="237" style="font-size:13px;fill:#3a3a3c">Instalación reproducible (lock)</text>
+<rect x="828" y="250" width="336" height="58" rx="8" fill="#fff4f2" stroke="#c0392b" stroke-width="1.2"/>
+<text x="838" y="267" style="font-size:11.5px;font-weight:700;fill:#a5281b">🔒 SEGURIDAD</text>
+<text x="838" y="285" style="font-size:12.5px;fill:#3a3a3c">npm audit bloquea dependencias con</text>
+<text x="838" y="303" style="font-size:12.5px;fill:#3a3a3c">vulnerabilidades altas · revisión de sintaxis</text>
+<text x="832" y="358" style="font-size:12px;fill:#6c6c70">Evidencia: Job Build en verde</text><rect x="1204" y="150" width="360" height="222" rx="14" fill="#fff" stroke="#1f4e79" stroke-width="2.5"/>
+<rect x="1204" y="150" width="360" height="40" rx="14" fill="#1f4e79"/><rect x="1204" y="176" width="360" height="14" fill="#1f4e79"/>
+<text x="1220" y="177" style="font-size:17px;font-weight:700;fill:#fff">4 · TEST</text>
+<text x="1220" y="216" style="font-size:15px;font-weight:700;fill:#1c1c1e">Jest · Supertest · PostgreSQL 16</text>
+<text x="1220" y="237" style="font-size:13px;fill:#3a3a3c">40 pruebas, 91.7 % cobertura</text>
+<rect x="1216" y="250" width="336" height="76" rx="8" fill="#fff4f2" stroke="#c0392b" stroke-width="1.2"/>
+<text x="1226" y="267" style="font-size:11.5px;font-weight:700;fill:#a5281b">🔒 SEGURIDAD</text>
+<text x="1226" y="285" style="font-size:12.5px;fill:#3a3a3c">Pruebas de reglas de seguridad: sin</text>
+<text x="1226" y="303" style="font-size:12.5px;fill:#3a3a3c">autovalidación (409), spam (429), sin token</text>
+<text x="1226" y="321" style="font-size:12.5px;fill:#3a3a3c">(401) · CodeQL SAST · gitleaks</text>
+<text x="1220" y="358" style="font-size:12px;fill:#6c6c70">Evidencia: Resumen de pruebas en Actions</text>
+<rect x="40" y="396" width="1524" height="34" rx="8" fill="#eaf6ee"/><text x="56" y="418" style="font-size:14px;font-weight:700;fill:#2e7d4f">ENTREGA Y DESPLIEGUE CONTINUOS (CD) · cada release test → main</text>
+<rect x="1204" y="450" width="360" height="222" rx="14" fill="#fff" stroke="#2e7d4f" stroke-width="2.5"/>
+<rect x="1204" y="450" width="360" height="40" rx="14" fill="#2e7d4f"/><rect x="1204" y="476" width="360" height="14" fill="#2e7d4f"/>
+<text x="1220" y="477" style="font-size:17px;font-weight:700;fill:#fff">5 · RELEASE</text>
+<text x="1220" y="516" style="font-size:15px;font-weight:700;fill:#1c1c1e">Pull Request test → main</text>
+<text x="1220" y="537" style="font-size:13px;fill:#3a3a3c">Release al cierre de cada sprint</text>
+<rect x="1216" y="550" width="336" height="58" rx="8" fill="#fff4f2" stroke="#c0392b" stroke-width="1.2"/>
+<text x="1226" y="567" style="font-size:11.5px;font-weight:700;fill:#a5281b">🔒 SEGURIDAD</text>
+<text x="1226" y="585" style="font-size:12.5px;fill:#3a3a3c">Solo entra si build, pruebas, CodeQL, gitleaks y</text>
+<text x="1226" y="603" style="font-size:12.5px;fill:#3a3a3c">npm audit pasan; PR documentado con DoD</text>
+<text x="1220" y="658" style="font-size:12px;fill:#6c6c70">Evidencia: PR #5, #10, #15, #19</text><rect x="816" y="450" width="360" height="222" rx="14" fill="#fff" stroke="#2e7d4f" stroke-width="2.5"/>
+<rect x="816" y="450" width="360" height="40" rx="14" fill="#2e7d4f"/><rect x="816" y="476" width="360" height="14" fill="#2e7d4f"/>
+<text x="832" y="477" style="font-size:17px;font-weight:700;fill:#fff">6 · DEPLOY</text>
+<text x="832" y="516" style="font-size:15px;font-weight:700;fill:#1c1c1e">azure/webapps-deploy · App Service</text>
+<text x="832" y="537" style="font-size:13px;fill:#3a3a3c">Despliegue automático + prueba de humo</text>
+<rect x="828" y="550" width="336" height="58" rx="8" fill="#fff4f2" stroke="#c0392b" stroke-width="1.2"/>
+<text x="838" y="567" style="font-size:11.5px;font-weight:700;fill:#a5281b">🔒 SEGURIDAD</text>
+<text x="838" y="585" style="font-size:12.5px;fill:#3a3a3c">Publish profile en GitHub Secrets · claves en</text>
+<text x="838" y="603" style="font-size:12.5px;fill:#3a3a3c">Key Vault leídas por identidad administrada</text>
+<text x="832" y="658" style="font-size:12px;fill:#6c6c70">Evidencia: Job Despliegue + /health ok</text><rect x="428" y="450" width="360" height="222" rx="14" fill="#fff" stroke="#2e7d4f" stroke-width="2.5"/>
+<rect x="428" y="450" width="360" height="40" rx="14" fill="#2e7d4f"/><rect x="428" y="476" width="360" height="14" fill="#2e7d4f"/>
+<text x="444" y="477" style="font-size:17px;font-weight:700;fill:#fff">7 · OPERATE</text>
+<text x="444" y="516" style="font-size:15px;font-weight:700;fill:#1c1c1e">App Service B1 · PostgreSQL Flexible</text>
+<text x="444" y="537" style="font-size:13px;fill:#3a3a3c">Brazil South (cercana a Perú)</text>
+<rect x="440" y="550" width="336" height="58" rx="8" fill="#fff4f2" stroke="#c0392b" stroke-width="1.2"/>
+<text x="450" y="567" style="font-size:11.5px;font-weight:700;fill:#a5281b">🔒 SEGURIDAD</text>
+<text x="450" y="585" style="font-size:12.5px;fill:#3a3a3c">Solo HTTPS + HSTS, TLS 1.2, FTP apagado · BD con</text>
+<text x="450" y="603" style="font-size:12.5px;fill:#3a3a3c">SSL y firewall solo Azure · límites por IP</text>
+<text x="444" y="658" style="font-size:12px;fill:#6c6c70">Evidencia: Configuración en el portal</text><rect x="40" y="450" width="360" height="222" rx="14" fill="#fff" stroke="#2e7d4f" stroke-width="2.5"/>
+<rect x="40" y="450" width="360" height="40" rx="14" fill="#2e7d4f"/><rect x="40" y="476" width="360" height="14" fill="#2e7d4f"/>
+<text x="56" y="477" style="font-size:17px;font-weight:700;fill:#fff">8 · MONITOR</text>
+<text x="56" y="516" style="font-size:15px;font-weight:700;fill:#1c1c1e">Application Insights · Azure Monitor</text>
+<text x="56" y="537" style="font-size:13px;fill:#3a3a3c">Peticiones, errores, tiempos</text>
+<rect x="52" y="550" width="336" height="58" rx="8" fill="#fff4f2" stroke="#c0392b" stroke-width="1.2"/>
+<text x="62" y="567" style="font-size:11.5px;font-weight:700;fill:#a5281b">🔒 SEGURIDAD</text>
+<text x="62" y="585" style="font-size:12.5px;fill:#3a3a3c">Alerta por correo con más de 5 errores 5xx en 5</text>
+<text x="62" y="603" style="font-size:12.5px;fill:#3a3a3c">min · logs de app y conexiones a la BD</text>
+<text x="56" y="658" style="font-size:12px;fill:#6c6c70">Evidencia: Alerta errores-5xx</text>
+<path d="M402 275 H424" class="l"/><path d="M790 275 H812" class="l"/><path d="M1178 275 H1200" class="l"/><path d="M1202 575 H1180" class="l"/><path d="M814 575 H792" class="l"/><path d="M426 575 H404" class="l"/><path d="M1564 275 C1604 275 1604 575 1568 575" class="l"/><path d="M40 575 C6 575 6 275 36 275" class="lv"/>
+<text x="12" y="420" style="font-size:12px;font-weight:700;fill:#2e7d4f" transform="rotate(-90 20 430)">retroalimentación</text>
+<rect x="40" y="690" width="1524" height="84" rx="12" fill="#fafafa" stroke="#e5e5ea"/>
+<text x="60" y="718" style="font-size:14px;font-weight:700;fill:#1c1c1e">Ejemplo real de shift-left en este proyecto</text>
+<text x="60" y="742" style="font-size:13.5px;fill:#3a3a3c">En el PR #6 (HU05 reportar evento), CodeQL marcó “Missing rate limiting” con severidad alta. Se corrigió en la misma rama con un límite de peticiones por IP</text>
+<text x="60" y="762" style="font-size:13.5px;fill:#3a3a3c">y el análisis volvió a verde antes de integrar: la vulnerabilidad nunca llegó a producción. La seguridad no existe; se trata de hacerla más difícil de vulnerar.</text>
+</svg></body></html>
