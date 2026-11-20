@@ -146,7 +146,7 @@ const portada = [
   tabla(['Dato', 'Valor'], [
     ['Curso', 'Proyecto de Fin de Carrera III (PFC III)'],
     ['Docente', 'Kenny Neira'],
-    ['Alumno', '[Nombres y apellidos] · [Código]'],
+    ['Alumno', 'Carlos Mendoza Lozada · [Código]'],
     ['Repositorio GitHub', GH],
     ['Tablero Jira (Scrum)', JIRA],
     ['Solución desplegada (Azure)', URL_APP],
