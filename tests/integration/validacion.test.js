@@ -23,5 +23,9 @@ conBD('HU06 y HU07 · Validación comunitaria y vencimiento', () => {
     expect(tercero.body.verificado).toBe(true);
     expect(tercero.body.confirmaciones).toBe(3);
 
+    // HU07: 3 votos de "ya no está" lo resuelven y desaparece del mapa
+    for (const n of ['v1', 'v2', 'v3']) await request(ctx.app).post(`/api/eventos/${id}/ya-no-esta`).set(ctx.auth(n));
+    const mapa = await request(ctx.app).get('/api/eventos');
+    expect(mapa.body.find((e) => e.id === id)).toBeUndefined();
   });
 });

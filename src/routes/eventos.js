@@ -1,4 +1,4 @@
-// HU04 mapa · HU05 reportar · HU06 validar
+// HU04 mapa · HU05 reportar · HU06 validar · HU07 vencimiento y "ya no está"
 const express = require('express');
 const db = require('../db');
 const { requireAuth } = require('../auth');
@@ -71,6 +71,17 @@ router.post('/eventos/:id/votos', requireAuth, async (req, res) => {
   if (motivo) return res.status(409).json({ error: motivo });
   await db.query('INSERT INTO votos (evento_id, usuario_id, voto) VALUES ($1,$2,$3)', [id, req.usuario.id, req.body.voto]);
   if (req.body.voto === 'confirma') await db.query('UPDATE eventos SET ultima_confirmacion_en = now() WHERE id = $1', [id]);
+  return res.status(201).json(aPublico(await repo.obtenerEvento(id), new Date()));
+});
+
+// "Ya no está": con 3 votos un evento persistente pasa a resuelto
+router.post('/eventos/:id/ya-no-esta', requireAuth, async (req, res) => {
+  const id = entero(req.params.id, 'id');
+  const evento = await repo.obtenerEvento(id);
+  if (!evento) return res.status(404).json({ error: 'Evento no encontrado' });
+  const { rowCount } = await db.query('SELECT 1 FROM cierres WHERE evento_id = $1 AND usuario_id = $2', [id, req.usuario.id]);
+  if (rowCount) return res.status(409).json({ error: 'Ya indicaste que este evento ya no está' });
+  await db.query('INSERT INTO cierres (evento_id, usuario_id) VALUES ($1,$2)', [id, req.usuario.id]);
   return res.status(201).json(aPublico(await repo.obtenerEvento(id), new Date()));
 });
 
