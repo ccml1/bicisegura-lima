@@ -60,10 +60,16 @@ for AJUSTE in "${!SECRETOS[@]}"; do
 done
 
 echo ">> 4. PostgreSQL: firewall solo para servicios de Azure, SSL obligatorio y TLS 1.2"
-for REGLA in $(az postgres flexible-server firewall-rule list -g "$RG" --name "$DB" --query "[?name!='PermitirServiciosAzure'].name" -o tsv); do
+# Azure CLI 2.87 usa --server-name (servidor) y --name (regla); versiones anteriores, --name y --rule-name.
+REGLAS=$(az postgres flexible-server firewall-rule list -g "$RG" --server-name "$DB" --query "[].name" -o tsv 2>/dev/null \
+  || az postgres flexible-server firewall-rule list -g "$RG" --name "$DB" --query "[].name" -o tsv)
+for REGLA in $REGLAS; do
+  [ "$REGLA" = "PermitirServiciosAzure" ] && continue
   echo "   quitando regla abierta: $REGLA"
-  az postgres flexible-server firewall-rule delete -g "$RG" --name "$DB" --rule-name "$REGLA" --yes -o none
+  az postgres flexible-server firewall-rule delete -g "$RG" --server-name "$DB" --name "$REGLA" --yes -o none 2>/dev/null \
+    || az postgres flexible-server firewall-rule delete -g "$RG" --name "$DB" --rule-name "$REGLA" --yes -o none
 done
+echo "   reglas del firewall: $(echo $REGLAS | tr ' ' ',')"
 az postgres flexible-server parameter set -g "$RG" --server-name "$DB" --name require_secure_transport --value on -o none
 az postgres flexible-server parameter set -g "$RG" --server-name "$DB" --name ssl_min_protocol_version --value TLSv1.2 -o none
 az postgres flexible-server parameter set -g "$RG" --server-name "$DB" --name log_connections --value on -o none
