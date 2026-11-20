@@ -33,6 +33,7 @@ function crearApp() {
 
   app.use('/api', require('./routes/auth'));
   app.use('/api', require('./routes/eventos'));
+  app.use('/api', require('./routes/estadisticas'));
   app.use('/api', (_req, res) => res.status(404).json({ error: 'Ruta no encontrada' }));
   const modulos = path.join(__dirname, '..', 'node_modules');
   app.use('/vendor/leaflet', express.static(path.join(modulos, 'leaflet', 'dist')));
