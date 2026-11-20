@@ -15,4 +15,12 @@ conBD('HU05 y HU08 · Reportes y límite contra spam', () => {
     const tipo = await request(ctx.app).post('/api/eventos').set(ctx.auth('autor')).send({ tipo: 'ovni', lat: -12.1, lng: -77.03, calle: 'X', distritoId: 1 });
     expect(tipo.status).toBe(400);
   });
+  test('HU08: el reporte 11 de la hora devuelve 429', async () => {
+    let ultimo;
+    for (let i = 0; i < 11; i += 1) {
+      ultimo = await request(ctx.app).post('/api/eventos').set(ctx.auth('v3'))
+        .send({ tipo: 'mal_estado', lat: -12.1, lng: -77.03, calle: `Calle ${i}`, distritoId: 2 });
+    }
+    expect(ultimo.status).toBe(429);
+  });
 });
