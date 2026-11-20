@@ -304,7 +304,16 @@ async function iniciar() {
     if (c.checked) estado.filtroTipos.add(c.dataset.filtro); else estado.filtroTipos.delete(c.dataset.filtro);
     cargarEventos();
   }));
-  $('#f-verificados').addEventListener('change', cargarEventos);
+  try {
+    const f = JSON.parse(localStorage.getItem('bicisegura.filtros') || '{}');
+    (f.tipos || []).forEach((t) => { estado.filtroTipos.add(t); const c = document.querySelector(`[data-filtro="${t}"]`); if (c) c.checked = true; });
+    $('#f-verificados').checked = Boolean(f.verificados);
+  } catch { /* sin almacenamiento */ }
+  const recordarFiltros = () => {
+    try { localStorage.setItem('bicisegura.filtros', JSON.stringify({ tipos: [...estado.filtroTipos], verificados: $('#f-verificados').checked })); } catch { /* sin almacenamiento */ }
+  };
+  document.querySelectorAll('[data-filtro]').forEach((c) => c.addEventListener('change', recordarFiltros));
+  $('#f-verificados').addEventListener('change', () => { recordarFiltros(); cargarEventos(); });
   $('#f-calor').addEventListener('change', (ev) => alternarCalor(ev.target.checked));
   $('#btn-reportar').addEventListener('click', () => alternarModoReporte(!estado.modoReporte));
   $('#btn-cuenta').addEventListener('click', () => formularioCuenta());
