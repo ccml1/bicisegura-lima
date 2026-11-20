@@ -32,7 +32,11 @@ function crearApp() {
   });
 
   app.use('/api', require('./routes/auth'));
+  app.use('/api', require('./routes/eventos'));
   app.use('/api', (_req, res) => res.status(404).json({ error: 'Ruta no encontrada' }));
+  const modulos = path.join(__dirname, '..', 'node_modules');
+  app.use('/vendor/leaflet', express.static(path.join(modulos, 'leaflet', 'dist')));
+  app.use('/vendor/leaflet-heat', express.static(path.join(modulos, 'leaflet.heat', 'dist')));
   app.use(express.static(path.join(__dirname, '..', 'public')));
 
   // eslint-disable-next-line no-unused-vars
