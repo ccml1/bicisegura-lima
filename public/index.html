@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>BiciSegura Lima</title>
+  <meta name="description" content="Mapa colaborativo para ciclistas de Lima: reportes y validación comunitaria en tiempo real.">
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="mapa" aria-label="Mapa de Lima con eventos para ciclistas"></div>
+
+  <header class="barra material">
+    <div class="marca">
+      <span class="logo" aria-hidden="true">🚲</span>
+      <div>
+        <h1>BiciSegura</h1>
+        <p class="sub" id="estado-vivo">Lima · en vivo</p>
+      </div>
+    </div>
+    <nav class="segmentado" role="tablist" aria-label="Vistas">
+      <button role="tab" aria-selected="true" data-vista="mapa" class="seg activo">Mapa</button>
+      <button role="tab" aria-selected="false" data-vista="riesgo" class="seg">Riesgo</button>
+      <button role="tab" aria-selected="false" data-vista="estadisticas" class="seg">Estadísticas</button>
+    </nav>
+    <button id="btn-cuenta" class="boton-texto">Ingresar</button>
+  </header>
+
+  <div class="capas material" role="group" aria-label="Capas y filtros">
+    <label class="chip"><input type="checkbox" id="f-verificados"> Solo verificados</label>
+    <label class="chip"><input type="checkbox" id="f-calor"> Mapa de calor</label>
+    <div id="f-tipos" class="chips-tipos"></div>
+  </div>
+
+  <button id="btn-reportar" class="fab" aria-label="Reportar un evento">＋ Reportar</button>
+  <div id="aviso" class="aviso material" role="status" aria-live="polite" hidden></div>
+
+  <section id="hoja" class="hoja material" aria-live="polite" hidden>
+    <div class="agarre" aria-hidden="true"></div>
+    <button class="cerrar" id="hoja-cerrar" aria-label="Cerrar">✕</button>
+    <div id="hoja-contenido"></div>
+  </section>
+
+  <footer class="pie">Datos de demostración · Validación comunitaria: 3 confirmaciones = verificado</footer>
+
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="vendor/leaflet-heat/leaflet-heat.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
