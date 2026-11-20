@@ -9,16 +9,19 @@ function crearApp() {
   app.set('trust proxy', 1); // App Service está detrás de un balanceador: IP real del cliente para el límite de intentos
   // Cabeceras de seguridad. CSP: scripts y estilos solo propios (Leaflet se sirve desde el mismo servidor);
   // imágenes externas solo de los mosaicos de OpenStreetMap (servicio externo del mapa).
+  // Referrer-Policy: la política de uso de mosaicos de OpenStreetMap exige que el navegador envíe el Referer
+  // (con "no-referrer", el valor por defecto de Helmet, OSM responde 403 "Access blocked"). Se envía solo el origen.
   app.use(helmet({
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
         scriptSrc: ["'self'"],
         styleSrc: ["'self'", "'unsafe-inline'"],
-        imgSrc: ["'self'", 'data:', 'https://*.tile.openstreetmap.org'],
+        imgSrc: ["'self'", 'data:', 'https://tile.openstreetmap.org'],
         connectSrc: ["'self'"],
       },
     },
+    referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
   }));
   app.use(express.json({ limit: '50kb' }));
 

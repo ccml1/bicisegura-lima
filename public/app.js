@@ -57,7 +57,7 @@ function cerrarHoja() { $('#hoja').hidden = true; }
 // ---------- mapa ----------
 const mapa = L.map('mapa', { zoomControl: false }).setView([-12.095, -77.03], 13);
 L.control.zoom({ position: 'bottomleft' }).addTo(mapa);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19, attribution: '&copy; colaboradores de OpenStreetMap',
 }).addTo(mapa);
 estado.capaEventos = L.layerGroup().addTo(mapa);
