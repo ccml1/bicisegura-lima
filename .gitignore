@@ -4,3 +4,6 @@ reports/
 .env
 *.xml
 app.zip
+docs/informe/*.docx
+docs/informe/*.pdf
+docs/informe/*.jpg

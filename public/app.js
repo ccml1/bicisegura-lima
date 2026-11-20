@@ -295,6 +295,39 @@ function cambiarVista(vista) {
   if (vista === 'estadisticas') vistaEstadisticas();
 }
 
+// ---------- HU15 · cerca de mí ----------
+function listaCercanos(origen, etiqueta) {
+  const lista = window.Cerca.cercanos(origen, estado.eventos, 1);
+  mapa.flyTo([origen.lat, origen.lng], 15, { duration: 0.6 });
+  abrirHoja(`
+    <h2>Cerca de ${esc(etiqueta)}</h2>
+    <p class="meta">Eventos y estacionamientos a 1 km o menos · tu ubicación no se guarda</p>
+    <ul class="lista">${lista.map((e) => `
+      <li class="zona" data-id="${e.id}"><span>${ICONOS[e.tipo]} ${esc(e.etiqueta)} · ${esc(e.calle)}</span>
+      <strong>${Math.round(e.distanciaKm * 1000)} m</strong></li>`).join('') || '<li class="meta">Nada reportado a menos de 1 km</li>'}</ul>`);
+  document.querySelectorAll('.zona[data-id]').forEach((li) => li.addEventListener('click', () => mostrarEvento(Number(li.dataset.id))));
+}
+function elegirDistrito() {
+  abrirHoja(`
+    <h2>Cerca de…</h2>
+    <p class="meta">No pudimos usar tu ubicación. Elige un distrito.</p>
+    <select id="sel-cerca">${estado.distritos.map((d) => `<option value="${d.id}">${esc(d.nombre)}</option>`).join('')}</select>
+    <button class="boton" id="ver-cerca" style="margin-top:.6rem">Ver eventos cercanos</button>`);
+  $('#ver-cerca').addEventListener('click', () => {
+    const d = estado.distritos.find((x) => x.id === Number($('#sel-cerca').value));
+    listaCercanos({ lat: d.lat, lng: d.lng }, d.nombre);
+  });
+}
+function cercaDeMi() {
+  if (!navigator.geolocation) return elegirDistrito();
+  navigator.geolocation.getCurrentPosition(
+    (p) => listaCercanos({ lat: p.coords.latitude, lng: p.coords.longitude }, 'ti'),
+    () => elegirDistrito(),
+    { enableHighAccuracy: true, timeout: 8000 },
+  );
+  return undefined;
+}
+
 // ---------- inicio ----------
 async function iniciar() {
   cargarSesion(); pintarCuenta();
@@ -304,8 +337,18 @@ async function iniciar() {
     if (c.checked) estado.filtroTipos.add(c.dataset.filtro); else estado.filtroTipos.delete(c.dataset.filtro);
     cargarEventos();
   }));
-  $('#f-verificados').addEventListener('change', cargarEventos);
+  try {
+    const f = JSON.parse(localStorage.getItem('bicisegura.filtros') || '{}');
+    (f.tipos || []).forEach((t) => { estado.filtroTipos.add(t); const c = document.querySelector(`[data-filtro="${t}"]`); if (c) c.checked = true; });
+    $('#f-verificados').checked = Boolean(f.verificados);
+  } catch { /* sin almacenamiento */ }
+  const recordarFiltros = () => {
+    try { localStorage.setItem('bicisegura.filtros', JSON.stringify({ tipos: [...estado.filtroTipos], verificados: $('#f-verificados').checked })); } catch { /* sin almacenamiento */ }
+  };
+  document.querySelectorAll('[data-filtro]').forEach((c) => c.addEventListener('change', recordarFiltros));
+  $('#f-verificados').addEventListener('change', () => { recordarFiltros(); cargarEventos(); });
   $('#f-calor').addEventListener('change', (ev) => alternarCalor(ev.target.checked));
+  $('#btn-cerca').addEventListener('click', cercaDeMi);
   $('#btn-reportar').addEventListener('click', () => alternarModoReporte(!estado.modoReporte));
   $('#btn-cuenta').addEventListener('click', () => formularioCuenta());
   $('#hoja-cerrar').addEventListener('click', cerrarHoja);

@@ -1,0 +1,30 @@
+gantt
+  title BiciSegura Lima · Cronograma (4 sprints de 1 semana)
+  dateFormat YYYY-MM-DD
+  axisFormat %d %b
+  section E5 Plataforma DevSecOps
+  HU01 Infraestructura Azure          :hu01, 2026-11-23, 2d
+  HU03 Registro e inicio de sesión    :hu03, 2026-11-23, 3d
+  HU02 Pipeline CI/CD seguro          :hu02, after hu01, 2d
+  HU08 Límite contra spam             :hu08, 2026-11-30, 3d
+  section E1 Mapa colaborativo
+  HU04 Mapa en tiempo real            :hu04, 2026-11-25, 5d
+  HU16 Filtros del mapa               :hu16, 2026-12-19, 2d
+  section E2 Reportes y validación
+  HU05 Reportar evento                :hu05, after hu04, 2d
+  HU06 Validación con 3 votos         :hu06, after hu05, 3d
+  HU07 Vencimiento y ya no está       :hu07, after hu06, 2d
+  section E3 Estadísticas y riesgo
+  HU09 Historial de la calle          :hu09, 2026-12-07, 2d
+  HU10 Semáforo de riesgo             :hu10, after hu09, 2d
+  HU11 Panel por distrito             :hu11, 2026-12-09, 4d
+  HU12 Mapa de calor                  :hu12, 2026-12-12, 2d
+  section E4 Ciclovías y estacionamientos
+  HU13 Ciclovías interrumpidas        :hu13, 2026-12-14, 4d
+  HU14 Estacionamientos seguros       :hu14, 2026-12-15, 3d
+  HU15 Eventos cerca de mí            :hu15, 2026-12-17, 2d
+  section Hitos (releases a main)
+  Release Sprint 1                    :milestone, m1, 2026-11-29, 0d
+  Release Sprint 2                    :milestone, m2, 2026-12-06, 0d
+  Release Sprint 3                    :milestone, m3, 2026-12-13, 0d
+  Release Sprint 4                    :milestone, m4, 2026-12-20, 0d
