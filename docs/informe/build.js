@@ -397,7 +397,8 @@ const prs = [
   ['#23', 'feature/EXAMPFC-6-seguridad-azure', 'test', 'HU01 endurecimiento de seguridad en Azure (Key Vault, identidad, TLS)'],
   ['#24', 'feature/EXAMPFC-6-fix-firewall-cli', 'test', 'HU01 corrección del script para Azure CLI 2.87'],
   ['#25', 'feature/EXAMPFC-6-diagramas-p3', 'test', 'HU01 diagramas de arquitectura lógica y DevSecOps'],
-  ['#26', 'test', 'main', '**Release final**'],
+  ['#26', 'feature/EXAMPFC-6-drawio-arquitectura', 'test', 'HU01 arquitectura lógica y física en draw.io'],
+  ['#27', 'test', 'main', '**Release final**'],
 ];
 const wf = extracto(`${P}/.github/workflows/ci-cd.yml`, 20, 32) + '\n  ...\n' + extracto(`${P}/.github/workflows/ci-cd.yml`, 72, 95);
 const p4 = [
