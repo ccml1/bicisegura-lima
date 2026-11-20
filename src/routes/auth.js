@@ -1,13 +1,22 @@
-// HU03 · Registro e inicio de sesión (bcrypt + JWT)
+// HU03 · Registro e inicio de sesión (bcrypt + JWT) con límite de intentos por IP (HU08)
 const express = require('express');
 const bcrypt = require('bcryptjs');
+const rateLimit = require('express-rate-limit');
 const db = require('../db');
 const { firmarToken } = require('../auth');
 const { requerido, ErrorValidacion } = require('../validar');
 
 const router = express.Router();
 
-router.post('/auth/registro', async (req, res) => {
+const limiteLogin = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: Number(process.env.MAX_LOGIN_15MIN) || 20,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+  message: { error: 'Demasiados intentos. Espera unos minutos.' },
+});
+
+router.post('/auth/registro', limiteLogin, async (req, res) => {
   requerido(req.body, ['nombre', 'email', 'password']);
   const { nombre, email, password } = req.body;
   if (String(password).length < 8) throw new ErrorValidacion('La contraseña debe tener al menos 8 caracteres');
@@ -20,7 +29,7 @@ router.post('/auth/registro', async (req, res) => {
   res.status(201).json({ token: firmarToken(rows[0]), usuario: rows[0] });
 });
 
-router.post('/auth/login', async (req, res) => {
+router.post('/auth/login', limiteLogin, async (req, res) => {
   requerido(req.body, ['email', 'password']);
   const { rows } = await db.query('SELECT id, nombre, email, password_hash FROM usuarios WHERE email = lower($1)', [req.body.email]);
   const usuario = rows[0];
