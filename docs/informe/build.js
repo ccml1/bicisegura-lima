@@ -340,7 +340,8 @@ const prs = [
   ['#15', 'test', 'main', '**Release Sprint 3**'],
   ['#16', 'feature/EXAMPFC-21-filtros-mapa', 'test', 'HU16 Filtros del mapa'],
   ['#17', 'feature/EXAMPFC-20-eventos-cerca-de-mi', 'test', 'HU15 Eventos cerca de mí'],
-  ['#18', 'test', 'main', '**Release Sprint 4**'],
+  ['#18', 'docs/informe-pc2', 'test', 'Documentación: backlog, burndown, Gantt, arquitectura'],
+  ['#19', 'test', 'main', '**Release Sprint 4**'],
 ];
 const wf = extracto(`${P}/.github/workflows/ci-cd.yml`, 20, 32) + '\n  ...\n' + extracto(`${P}/.github/workflows/ci-cd.yml`, 72, 95);
 const p4 = [

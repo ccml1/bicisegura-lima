@@ -72,6 +72,6 @@
   {"n": 1, "jiraId": 95, "nombre": "Plataforma base y mapa", "fechas": "23 – 29 nov", "objetivo": "El ciclista ve en un mapa público los eventos de Lima, sobre una plataforma desplegada en Azure con un pipeline CI/CD seguro.", "release": "PR #5 test → main"},
   {"n": 2, "jiraId": 96, "nombre": "Reportes y validación comunitaria", "fechas": "30 nov – 6 dic", "objetivo": "Los ciclistas reportan eventos y los validan entre ellos: con 3 confirmaciones de personas distintas el evento queda verificado.", "release": "PR #10 test → main"},
   {"n": 3, "jiraId": 97, "nombre": "Estadísticas y zonas de riesgo", "fechas": "7 – 13 dic", "objetivo": "El ciclista conoce el riesgo real de cada calle y distrito con estadísticas calculadas solo con eventos verificados.", "release": "PR #15 test → main"},
-  {"n": 4, "jiraId": 98, "nombre": "Ciclovías y estacionamientos", "fechas": "14 – 20 dic", "objetivo": "El ciclista encuentra ciclovías conectadas entre distritos, tramos interrumpidos y estacionamientos seguros validados por la comunidad.", "release": "PR de release Sprint 4 test → main"}
+  {"n": 4, "jiraId": 98, "nombre": "Ciclovías y estacionamientos", "fechas": "14 – 20 dic", "objetivo": "El ciclista encuentra ciclovías conectadas entre distritos, tramos interrumpidos y estacionamientos seguros validados por la comunidad.", "release": "PR #19 test → main"}
  ]
 }
