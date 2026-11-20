@@ -1,11 +1,16 @@
-// HU04 mapa público con eventos activos
+// HU04 mapa · HU05 reportar
 const express = require('express');
 const db = require('../db');
-const { entero } = require('../validar');
+const { requireAuth } = require('../auth');
+const { requerido, enLista, numero, entero, ErrorValidacion } = require('../validar');
 const repo = require('../repositorio');
-const { TIPOS, estadoEvento } = require('../domain/eventos');
+const { limiteApi } = require('../limites');
+const {
+  TIPOS, estadoEvento, dentroDeLima,
+} = require('../domain/eventos');
 
 const router = express.Router();
+router.use(limiteApi);
 
 function aPublico(e, ahora) {
   const st = estadoEvento(e, ahora);
@@ -38,6 +43,21 @@ router.get('/eventos', async (req, res) => {
     .filter((e) => !tipos || tipos.includes(e.tipo))
     .filter((e) => !soloVerificados || e.verificado);
   res.json(eventos);
+});
+
+router.post('/eventos', requireAuth, async (req, res) => {
+  requerido(req.body, ['tipo', 'lat', 'lng', 'calle', 'distritoId']);
+  enLista(req.body.tipo, Object.keys(TIPOS), 'tipo');
+  const lat = numero(req.body.lat, 'lat');
+  const lng = numero(req.body.lng, 'lng');
+  if (!dentroDeLima(lat, lng)) throw new ErrorValidacion('La ubicación debe estar dentro de Lima Metropolitana');
+  const { rows } = await db.query(
+    `INSERT INTO eventos (tipo, lat, lng, calle, distrito_id, descripcion, autor_id, ultima_confirmacion_en)
+     VALUES ($1,$2,$3,$4,$5,$6,$7, now()) RETURNING id`,
+    [req.body.tipo, lat, lng, String(req.body.calle).trim().slice(0, 120), entero(req.body.distritoId, 'distritoId'),
+      req.body.descripcion ? String(req.body.descripcion).slice(0, 280) : null, req.usuario.id],
+  );
+  return res.status(201).json(aPublico(await repo.obtenerEvento(rows[0].id), new Date()));
 });
 
 module.exports = router;
