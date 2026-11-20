@@ -342,6 +342,8 @@ const prs = [
   ['#17', 'feature/EXAMPFC-20-eventos-cerca-de-mi', 'test', 'HU15 Eventos cerca de mí'],
   ['#18', 'docs/informe-pc2', 'test', 'Documentación: backlog, burndown, Gantt, arquitectura'],
   ['#19', 'test', 'main', '**Release Sprint 4**'],
+  ['#20', 'feature/EXAMPFC-9-fix-mosaicos-osm', 'test', 'HU04 corrección: mosaicos de OSM bloqueados (Referrer-Policy)'],
+  ['#21', 'test', 'main', '**Hotfix a producción**'],
 ];
 const wf = extracto(`${P}/.github/workflows/ci-cd.yml`, 20, 32) + '\n  ...\n' + extracto(`${P}/.github/workflows/ci-cd.yml`, 72, 95);
 const p4 = [
@@ -364,7 +366,7 @@ const p4 = [
   p('Workflow `.github/workflows/ci-cd.yml` con cuatro etapas y un workflow adicional de **CodeQL** para el análisis estático:'),
   tabla(['Job', 'Cuándo corre', 'Qué hace'], [
     ['1. Build', 'PR y push a test/main', '`npm ci` y revisión de sintaxis (`npm run check`)'],
-    ['2. Pruebas automatizadas', 'Después de build', '39 pruebas (25 unitarias + 14 de integración contra un PostgreSQL 16 de servicio) con cobertura; publica el resultado en el resumen de la ejecución y guarda los reportes (JUnit y cobertura) como artefactos'],
+    ['2. Pruebas automatizadas', 'Después de build', '40 pruebas (25 unitarias + 15 de integración contra un PostgreSQL 16 de servicio) con cobertura; publica el resultado en el resumen de la ejecución y guarda los reportes (JUnit y cobertura) como artefactos'],
     ['3. Seguridad', 'Después de build, en paralelo con pruebas', '**gitleaks** (secretos en todo el historial) y **npm audit** (dependencias; falla con vulnerabilidades altas)'],
     ['CodeQL (SAST)', 'PR y push a test/main', 'Análisis estático del código JavaScript con la suite `security-extended`'],
     ['4. Despliegue', 'Solo push a main con 2 y 3 en verde', 'Empaqueta dependencias de producción, despliega en Azure App Service y hace la prueba de humo contra `/health`'],
@@ -381,10 +383,10 @@ const p4 = [
     ['limite-reportes.test.js', 'Unitaria', 'Límite de 10 reportes por hora', '2'],
     ['historial / riesgo / estadisticas / cerca', 'Unitaria', 'Conteos de 30 días solo verificados, semáforo, franja horaria, tendencia, distancia de 1 km', '13'],
     ['auth / reportes / validacion', 'Integración', 'Registro y login (bcrypt, JWT, error genérico), reporte con 401/400/429, votos con 409', '7'],
-    ['mapa / estadisticas / filtros', 'Integración', 'Mapa en vivo, historial de calle, semáforo, panel, mapa de calor y filtros contra PostgreSQL real', '7'],
+    ['mapa / estadisticas / filtros', 'Integración', 'Mapa en vivo, cabecera Referrer-Policy exigida por OSM, historial de calle, semáforo, panel, mapa de calor y filtros contra PostgreSQL real', '8'],
   ], [2700, 1200, 4838, 900]),
   espacio(),
-  p('**Resultado:** 13 archivos, **39 pruebas en verde**; cobertura de sentencias **91.7 %** (líneas 95.2 %, funciones 93.3 %, ramas 77.7 %).'),
+  p('**Resultado:** 13 archivos, **40 pruebas en verde**; cobertura de sentencias **91.7 %** (líneas 95.2 %, funciones 93.3 %, ramas 77.7 %).'),
   captura('GitHub > Actions > resumen de la ejecución con la tabla de pruebas y cobertura'),
   h2('4.4 Seguridad en el pipeline y en la aplicación'),
   tabla(['Control', 'Herramienta', 'Evidencia'], [
@@ -452,7 +454,7 @@ const anexo = [
     'export JWT_SECRET=un-secreto-largo',
     'npm run migrate        # tablas, 10 distritos y datos demo (idempotente)',
     'npm run dev            # http://localhost:3000',
-    'npm test               # 39 pruebas (integración requiere DATABASE_URL)',
+    'npm test               # 40 pruebas (integración requiere DATABASE_URL)',
     '',
     'Cuentas demo (contraseña Demo1234!): ana@demo.pe, luis@demo.pe, maria@demo.pe, ...',
   ].join('\n')),
