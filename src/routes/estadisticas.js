@@ -6,6 +6,7 @@ const repo = require('../repositorio');
 const { limiteApi } = require('../limites');
 const { requerido, entero } = require('../validar');
 const { historialCalle, riesgoZona, estadisticasDistrito } = require('../domain/estadisticas');
+const { estadoEvento, DIA, DIAS_HISTORIAL } = require('../domain/eventos');
 
 const router = express.Router();
 router.use(limiteApi);
@@ -34,6 +35,16 @@ router.get('/estadisticas/:distritoId', async (req, res) => {
   if (!rows[0]) return res.status(404).json({ error: 'Distrito no encontrado' });
   const eventos = await repo.listarEventos({ distritoId });
   return res.json({ distrito: rows[0].nombre, ...estadisticasDistrito(eventos, new Date()) });
+});
+
+router.get('/mapa-calor', async (_req, res) => {
+  const ahora = new Date();
+  const desde = ahora - DIAS_HISTORIAL * DIA;
+  const puntos = (await repo.listarEventos())
+    .filter((e) => (e.tipo === 'robo' || e.tipo === 'accidente') && new Date(e.creado_en) >= desde)
+    .filter((e) => estadoEvento(e, ahora).cuentaEnEstadisticas)
+    .map((e) => [e.lat, e.lng, e.tipo === 'robo' ? 1 : 0.7]);
+  res.json(puntos);
 });
 
 module.exports = router;
