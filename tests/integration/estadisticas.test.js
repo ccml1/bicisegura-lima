@@ -24,4 +24,9 @@ conBD('HU09 a HU12 · Historial, riesgo, estadísticas y mapa de calor', () => {
     expect(r.body.topCallesRobos.length).toBeGreaterThan(0);
     expect(r.body.franjaMasRiesgosa.franja).toBeDefined();
   });
+  test('HU12: mapa de calor devuelve puntos [lat, lng, peso]', async () => {
+    const r = await request(ctx.app).get('/api/mapa-calor');
+    expect(r.body.length).toBeGreaterThan(0);
+    expect(r.body[0]).toHaveLength(3);
+  });
 });
