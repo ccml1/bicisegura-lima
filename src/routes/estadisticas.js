@@ -5,7 +5,7 @@ const db = require('../db');
 const repo = require('../repositorio');
 const { limiteApi } = require('../limites');
 const { requerido, entero } = require('../validar');
-const { historialCalle, riesgoZona } = require('../domain/estadisticas');
+const { historialCalle, riesgoZona, estadisticasDistrito } = require('../domain/estadisticas');
 
 const router = express.Router();
 router.use(limiteApi);
@@ -26,6 +26,14 @@ router.get('/zonas/riesgo', async (_req, res) => {
   res.json(distritos.rows.map((d) => ({
     ...d, ...riesgoZona(eventos.filter((e) => e.distrito_id === d.id), ahora),
   })));
+});
+
+router.get('/estadisticas/:distritoId', async (req, res) => {
+  const distritoId = entero(req.params.distritoId, 'distritoId');
+  const { rows } = await db.query('SELECT id, nombre FROM distritos WHERE id = $1', [distritoId]);
+  if (!rows[0]) return res.status(404).json({ error: 'Distrito no encontrado' });
+  const eventos = await repo.listarEventos({ distritoId });
+  return res.json({ distrito: rows[0].nombre, ...estadisticasDistrito(eventos, new Date()) });
 });
 
 module.exports = router;

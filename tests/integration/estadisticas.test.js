@@ -16,4 +16,12 @@ conBD('HU09 a HU12 · Historial, riesgo, estadísticas y mapa de calor', () => {
     expect(colores.has('rojo')).toBe(true);
     expect(colores.has('verde') || colores.has('amarillo')).toBe(true);
   });
+  test('HU11: panel de estadísticas de un distrito', async () => {
+    const { body: distritos } = await request(ctx.app).get('/api/distritos');
+    const cercado = distritos.find((d) => d.nombre === 'Cercado de Lima');
+    const r = await request(ctx.app).get(`/api/estadisticas/${cercado.id}`);
+    expect(r.status).toBe(200);
+    expect(r.body.topCallesRobos.length).toBeGreaterThan(0);
+    expect(r.body.franjaMasRiesgosa.franja).toBeDefined();
+  });
 });
