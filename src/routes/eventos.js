@@ -4,11 +4,13 @@ const db = require('../db');
 const { requireAuth } = require('../auth');
 const { requerido, enLista, numero, entero, ErrorValidacion } = require('../validar');
 const repo = require('../repositorio');
+const { limiteApi } = require('../limites');
 const {
   TIPOS, estadoEvento, dentroDeLima,
 } = require('../domain/eventos');
 
 const router = express.Router();
+router.use(limiteApi);
 
 function aPublico(e, ahora) {
   const st = estadoEvento(e, ahora);
